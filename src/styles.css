@@ -1,0 +1,212 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * GRIFFIN Coffee — design system
+ * Palette taken from the brand mark: deep emerald ground + copper foil + ivory.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-emerald-deep: var(--emerald-deep);
+  --color-emerald-soft: var(--emerald-soft);
+  --color-copper: var(--copper);
+  --color-copper-soft: var(--copper-soft);
+  --color-ivory: var(--ivory);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* brand */
+  --emerald-deep: oklch(0.28 0.045 168);
+  --emerald-soft: oklch(0.35 0.045 168);
+  --copper: oklch(0.7 0.088 52);
+  --copper-soft: oklch(0.8 0.06 60);
+  --ivory: oklch(0.975 0.008 85);
+
+  --background: var(--emerald-deep);
+  --foreground: var(--copper);
+  --card: var(--emerald-soft);
+  --card-foreground: var(--copper);
+  --popover: var(--emerald-deep);
+  --popover-foreground: var(--copper);
+  --primary: var(--copper);
+  --primary-foreground: var(--emerald-deep);
+  --secondary: var(--emerald-soft);
+  --secondary-foreground: var(--ivory);
+  --muted: var(--emerald-soft);
+  --muted-foreground: oklch(0.82 0.03 70);
+  --accent: var(--copper);
+  --accent-foreground: var(--emerald-deep);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--ivory);
+  --border: color-mix(in oklab, var(--copper) 35%, transparent);
+  --input: color-mix(in oklab, var(--copper) 35%, transparent);
+  --ring: var(--copper);
+
+  --shadow-lux: 0 24px 60px -24px color-mix(in oklab, black 70%, transparent);
+  --gradient-veil: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--emerald-deep) 35%, transparent) 0%,
+    color-mix(in oklab, var(--emerald-deep) 85%, transparent) 65%,
+    var(--emerald-deep) 100%
+  );
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 300;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility tracking-brand {
+  letter-spacing: 0.32em;
+}
+
+@utility shadow-lux {
+  box-shadow: var(--shadow-lux);
+}
+
+@utility hero-veil {
+  background-image: var(--gradient-veil);
+}
+
+@utility rule-copper {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--copper) 70%, transparent),
+    transparent
+  );
+}
+
+/* Marquee for the dishes strip */
+@utility marquee-track {
+  animation: marquee-scroll 38s linear infinite;
+  width: max-content;
+}
+
+@utility marquee-paused {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Orbiting gallery ring */
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-spin-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@utility orbit-ring {
+  animation: orbit-spin 34s linear infinite;
+}
+
+@utility orbit-counter {
+  animation: orbit-spin-reverse 34s linear infinite;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility rise-in {
+  animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
