@@ -1,9 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { Footer } from "@/components/site/Footer";
 import { Navbar } from "@/components/site/Navbar";
-import { menuCategories, type MenuCategory, type MenuItem } from "@/data/menuData";
+import { menuCategories, type MenuCategory } from "@/data/menuData";
 import { motion, AnimatePresence } from "framer-motion";
+import { SandwichAnimation } from "@/components/animations/SandwichAnimation";
+import { CoffeeAnimation } from "@/components/animations/CoffeeAnimation";
+import { BubbleAnimation } from "@/components/animations/BubbleAnimation";
+import { FlipAnimation } from "@/components/animations/FlipAnimation";
+import { BurgerIntroVideo } from "@/components/animations/BurgerIntroVideo";
+import { CategoryVideo } from "@/components/animations/CategoryVideo";
+import { useEffect, useRef, useState } from "react";
+import coffeeVideo from "@/assets/coffee-anmation.mp4";
+import juiceVideo from "@/assets/juice-anmation.mp4";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -28,391 +36,184 @@ export const Route = createFileRoute("/menu")({
 });
 
 function MenuPage() {
-  const [selectedCategory, setSelectedCategory] = useState<MenuCategory | null>(null);
-  const [hoveredItem, setHoveredItem] = useState<MenuItem | null>(null);
+  const [showIntro, setShowIntro] = useState(true);
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <main className="pt-16 sm:pt-20">
-        <section className="px-6 py-14 text-center sm:py-20">
-          <h1 className="font-display text-4xl uppercase tracking-[0.2em] text-copper sm:text-6xl">
-            Menu Griffin
-          </h1>
-          <div className="rule-copper mx-auto mt-6 w-48" />
-          <p className="mx-auto mt-5 max-w-xl text-sm text-muted-foreground">
-            Specialty coffee, sourdough kitchen and desserts — served all day, every day
-            from 7:30 AM to 1:00 AM.
-          </p>
-        </section>
-
-        {/* Categories Grid */}
-        <section className="mx-auto max-w-7xl px-6 pb-20">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {menuCategories.map((category) => (
-              <CategoryCard
-                key={category.id}
-                category={category}
-                isSelected={selectedCategory?.id === category.id}
-                onClick={() => setSelectedCategory(category)}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* Side Panel for Items */}
-        <AnimatePresence>
-          {selectedCategory && (
-            <ItemsPanel
-              category={selectedCategory}
-              hoveredItem={hoveredItem}
-              onHoverItem={setHoveredItem}
-              onClose={() => setSelectedCategory(null)}
-            />
-          )}
-        </AnimatePresence>
-      </main>
-      <Footer />
-    </div>
-  );
-}
-
-// Category Card Component
-function CategoryCard({
-  category,
-  isSelected,
-  onClick,
-}: {
-  category: MenuCategory;
-  isSelected: boolean;
-  onClick: () => void;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      className="group relative cursor-pointer overflow-hidden rounded-lg border border-copper/20 bg-card shadow-lg transition-all hover:shadow-2xl"
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      onClick={onClick}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      {/* Background Image */}
-      <div className="relative h-64 overflow-hidden">
-        <motion.img
-          src={category.image}
-          alt={category.name}
-          className="h-full w-full object-cover"
-          animate={{ scale: isHovered ? 1.1 : 1 }}
-          transition={{ duration: 0.6 }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-
-        {/* Animation Overlay */}
-        <AnimationOverlay animation={category.animation} isActive={isHovered} />
-      </div>
-
-      {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-        <h3 className="font-display text-2xl uppercase tracking-wider text-copper">
-          {category.name}
-        </h3>
-        <motion.div
-          className="mt-3 text-xs uppercase tracking-widest text-copper/80"
-          animate={{ opacity: isHovered ? 1 : 0.6 }}
-        >
-          Click to explore →
-        </motion.div>
-      </div>
-
-      {/* Selected Indicator */}
-      {isSelected && (
-        <motion.div
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-copper text-white shadow-lg"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-        >
-          ✓
-        </motion.div>
-      )}
-    </motion.div>
-  );
-}
-
-// Animation Overlay Component
-function AnimationOverlay({
-  animation,
-  isActive,
-}: {
-  animation: MenuCategory["animation"];
-  isActive: boolean;
-}) {
-  if (animation === "ice-fall" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-2xl"
-            initial={{
-              top: -20,
-              left: `${Math.random() * 100}%`,
-              opacity: 0,
-            }}
-            animate={{
-              top: "110%",
-              opacity: [0, 1, 1, 0],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 2 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "linear",
-            }}
-          >
-            ❄️
-          </motion.div>
-        ))}
-      </div>
-    );
-  }
-
-  if (animation === "steam" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute bottom-10 text-3xl opacity-60"
-            style={{ left: `${20 + i * 10}%` }}
-            animate={{
-              y: [-20, -80],
-              opacity: [0.6, 0],
-              scale: [1, 1.5],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              delay: i * 0.3,
-              ease: "easeOut",
-            }}
-          >
-            💨
-          </motion.div>
-        ))}
-      </div>
-    );
-  }
-
-  if (animation === "sparkle" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-xl"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              scale: [0, 1.5, 0],
-              opacity: [0, 1, 0],
-              rotate: [0, 180],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          >
-            ✨
-          </motion.div>
-        ))}
-      </div>
-    );
-  }
-
-  if (animation === "flip" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <motion.div
-          className="text-6xl"
-          animate={{
-            rotateY: [0, 180, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          🥞
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (animation === "stack" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-4xl"
-            animate={{
-              y: [0, -15 * i, 0],
-              opacity: [0.8, 1, 0.8],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              delay: i * 0.2,
-            }}
-          >
-            🥞
-          </motion.div>
-        ))}
-      </div>
-    );
-  }
-
-  if (animation === "slice" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <motion.div
-          className="text-5xl"
-          animate={{
-            x: [-30, 30, -30],
-            rotate: [-15, 15, -15],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          🍞
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (animation === "bubble" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0">
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute bottom-0 text-2xl"
-            style={{ left: `${Math.random() * 100}%` }}
-            animate={{
-              y: [0, -150],
-              scale: [0.5, 1.2],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{
-              duration: 2 + Math.random(),
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "easeOut",
-            }}
-          >
-            🫧
-          </motion.div>
-        ))}
-      </div>
-    );
-  }
-
-  if (animation === "shake" && isActive) {
-    return (
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <motion.div
-          className="text-6xl"
-          animate={{
-            rotate: [-5, 5, -5],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          🥤
-        </motion.div>
-      </div>
-    );
-  }
-
-  return null;
-}
-
-// Items Panel Component
-function ItemsPanel({
-  category,
-  hoveredItem,
-  onHoverItem,
-  onClose,
-}: {
-  category: MenuCategory;
-  hoveredItem: MenuItem | null;
-  onHoverItem: (item: MenuItem | null) => void;
-  onClose: () => void;
-}) {
   return (
     <>
-      {/* Backdrop */}
-      <motion.div
-        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
-      />
+      {/* Intro Video - plays once on page load */}
+      {showIntro && (
+        <BurgerIntroVideo onComplete={() => setShowIntro(false)} />
+      )}
 
-      {/* Side Panel */}
-      <motion.div
-        className="fixed right-0 top-0 z-50 h-full w-full overflow-y-auto bg-background shadow-2xl sm:w-[500px]"
-        initial={{ x: "100%" }}
-        animate={{ x: 0 }}
-        exit={{ x: "100%" }}
-        transition={{ type: "spring", damping: 30, stiffness: 300 }}
-      >
-        {/* Header */}
-        <div className="sticky top-0 z-10 border-b border-copper/20 bg-background/95 p-6 backdrop-blur">
-          <button
-            onClick={onClose}
-            className="absolute right-4 top-4 text-2xl text-muted-foreground hover:text-copper"
+      {/* Main Menu - shown after video */}
+      <AnimatePresence>
+        {!showIntro && (
+          <motion.div
+            className="min-h-screen bg-background"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
           >
-            ✕
-          </button>
-          <h2 className="font-display text-3xl uppercase tracking-wider text-copper">
-            {category.name}
-          </h2>
+            <Navbar />
+            <main className="pt-16 sm:pt-20">
+              <section className="px-6 py-14 text-center sm:py-20">
+                <h1 className="font-display text-4xl uppercase tracking-[0.2em] text-copper sm:text-6xl">
+                  Menu Griffin
+                </h1>
+                <div className="rule-copper mx-auto mt-6 w-48" />
+                <p className="mx-auto mt-5 max-w-xl text-sm text-muted-foreground">
+                  Specialty coffee, sourdough kitchen and desserts — served all day, every day
+                  from 7:30 AM to 1:00 AM.
+                </p>
+              </section>
+
+              {/* Categories Section */}
+              <section className="mx-auto max-w-7xl px-6 pb-20">
+                {menuCategories.map((category, index) => (
+                  <CategorySection key={category.id} category={category} index={index} />
+                ))}
+              </section>
+            </main>
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+// Category Section Component
+function CategorySection({
+  category,
+  index,
+}: {
+  category: MenuCategory;
+  index: number;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoCompleted, setVideoCompleted] = useState(false);
+  const categoryRef = useRef<HTMLDivElement>(null);
+
+  // Check if this is the Coffee Drinks category or Fresh Juice
+  const isCoffeeDrinks = category.id === "coffee-drinks";
+  const isFreshJuice = category.id === "fresh-juice";
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsVisible(true);
+          setHasAnimated(true);
+
+          // Trigger video for Coffee Drinks
+          if (isCoffeeDrinks && !videoCompleted) {
+            console.log("Coffee Drinks is visible - triggering video");
+            setShowVideo(true);
+          }
+
+          // Trigger video for Fresh Juice
+          if (isFreshJuice && !videoCompleted) {
+            console.log("Fresh Juice is visible - triggering video");
+            setShowVideo(true);
+          }
+        }
+      },
+      { threshold: 0.3 } // Lower threshold to trigger earlier
+    );
+
+    if (categoryRef.current) {
+      observer.observe(categoryRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated, isCoffeeDrinks, isFreshJuice, videoCompleted]);
+
+  return (
+    <>
+      {/* Coffee Video - plays when scrolling to Coffee Drinks */}
+      {isCoffeeDrinks && showVideo && !videoCompleted && (
+        <CategoryVideo
+          videoSrc={coffeeVideo}
+          isVisible={showVideo}
+          onComplete={() => {
+            setVideoCompleted(true);
+            setShowVideo(false);
+          }}
+        />
+      )}
+
+      {/* Juice Video - plays when scrolling to Fresh Juice */}
+      {isFreshJuice && showVideo && !videoCompleted && (
+        <CategoryVideo
+          videoSrc={juiceVideo}
+          isVisible={showVideo}
+          onComplete={() => {
+            setVideoCompleted(true);
+            setShowVideo(false);
+          }}
+        />
+      )}
+
+      <motion.div
+        ref={categoryRef}
+        className="mb-20"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+      >
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {/* Left Side - Category Image */}
+        <div className="relative overflow-hidden rounded-lg">
+          <motion.div
+            className="relative"
+            initial={{ height: 400 }}
+            animate={{ height: 400 }}
+            transition={{ 
+              duration: 6, 
+              times: [0, 0.15, 1],
+              ease: "easeInOut"
+            }}
+          >
+            <div className="relative h-full min-h-[400px]">
+              <img
+                src={category.image}
+                alt={category.name}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+              
+              {/* Animation Overlay - triggers only when visible */}
+              <AnimationOverlay animation={category.animation} isVisible={isVisible} />
+
+              {/* Category Name */}
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <h2 className="font-display text-4xl uppercase tracking-wider text-copper lg:text-5xl">
+                  {category.name}
+                </h2>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Items List */}
-        <div className="p-6">
-          <div className="space-y-4">
-            {category.items.map((item, index) => (
+        {/* Right Side - Products List */}
+        <div className="flex flex-col">
+          <div className="space-y-3">
+            {category.items.map((item, itemIndex) => (
               <motion.div
-                key={index}
-                className="group relative cursor-pointer overflow-hidden rounded-lg border border-copper/10 bg-card p-4 transition-all hover:border-copper/40 hover:shadow-lg"
-                onHoverStart={() => onHoverItem(item)}
-                onHoverEnd={() => onHoverItem(null)}
+                key={itemIndex}
+                className="group cursor-pointer rounded-lg border border-copper/10 bg-card p-4 transition-all hover:border-copper/40 hover:shadow-lg"
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.05 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: itemIndex * 0.05 }}
+                whileHover={{ scale: 1.03 }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="text-lg font-medium text-foreground group-hover:text-copper">
+                    <h3 className="text-base font-medium text-foreground group-hover:text-copper lg:text-lg">
                       {item.name}
                     </h3>
                     {item.description && (
@@ -422,14 +223,29 @@ function ItemsPanel({
                     )}
                   </div>
                   <div className="ml-4 text-right">
-                    <p className="font-display text-xl text-copper">{item.price} LE</p>
+                    <p className="font-display text-lg text-copper lg:text-xl">
+                      {item.price} LE
+                    </p>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
+    </motion.div>
     </>
   );
+}
+
+// Advanced Animation Overlay Component with layered animations
+function AnimationOverlay({
+  animation,
+  isVisible,
+}: {
+  animation: MenuCategory["animation"];
+  isVisible: boolean;
+}) {
+  // All animations disabled - using intro video instead
+  return null;
 }
