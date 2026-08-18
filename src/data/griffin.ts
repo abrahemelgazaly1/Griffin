@@ -2,7 +2,6 @@ import dish1 from "@/assets/dish-1.jpg";
 import dish2 from "@/assets/dish-2.jpg";
 import dish3 from "@/assets/dish-3.jpg";
 import dish4 from "@/assets/dish-4.jpg";
-import gallery1 from "@/assets/gallery-1.jpg";
 import gallery2 from "@/assets/gallery-2.jpg";
 import gallery3 from "@/assets/gallery-3.jpg";
 import gallery4 from "@/assets/gallery-4.jpg";
@@ -53,12 +52,12 @@ export const dishes: Dish[] = [
 ];
 
 export const galleryImages = [
-  { src: gallery1, alt: "Griffin barista pouring latte art" },
-  { src: gallery2, alt: "Quiet work-friendly corner seating at Griffin" },
-  { src: gallery3, alt: "Freshly baked sourdough loaves" },
-  { src: gallery4, alt: "Copper espresso machine at the Griffin bar" },
-  { src: gallery5, alt: "Iced coffee and dessert on a marble table" },
-  { src: gallery6, alt: "Calm interior of Griffin Coffee" },
+  { src: gallery2, alt: "Griffin barista pouring latte art" },
+  { src: gallery3, alt: "Quiet work-friendly corner seating at Griffin" },
+  { src: gallery4, alt: "Freshly baked sourdough loaves" },
+  { src: gallery5, alt: "Copper espresso machine at the Griffin bar" },
+  { src: gallery6, alt: "Iced coffee and dessert on a marble table" },
+  { src: gallery2, alt: "Calm interior of Griffin Coffee" },
 ];
 
 export const reviews = [

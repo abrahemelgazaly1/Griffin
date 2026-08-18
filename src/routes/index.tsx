@@ -5,6 +5,7 @@ import { useState } from "react";
 import heroImage from "@/assets/hero.jpg";
 import { Footer } from "@/components/site/Footer";
 import { Navbar } from "@/components/site/Navbar";
+import { Reveal } from "@/components/site/Reveal";
 import {
   Dialog,
   DialogContent,
@@ -16,23 +17,57 @@ import { contact, dishes, galleryImages, reviews, type Dish } from "@/data/griff
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Griffin Coffee | Quiet Specialty Café in El-Mahalla El-Kubra" },
+      { title: "Griffin Coffee | أفضل مقهى متخصص في المحلة الكبرى - Specialty Café" },
       {
         name: "description",
         content:
-          "Griffin is a calm specialty coffee house in El-Mahalla El-Kubra: sourdough kitchen, faultless service, spotless space and fast Wi-Fi for work. Open 7:30 AM – 1 AM.",
+          "جريفين كافيه - مقهى هادئ ومتخصص في المحلة الكبرى. قهوة سبيشاليتي، مطبخ عجين مخمر، إفطار فاخر وواي فاي سريع. مفتوح من 7:30 صباحاً حتى 1 صباحاً | Griffin: Quiet specialty coffee house in El-Mahalla with sourdough kitchen, premium breakfast & fast Wi-Fi.",
+      },
+      {
+        name: "keywords",
+        content:
+          "جريفين كافيه, Griffin Coffee, مقهى المحلة الكبرى, قهوة متخصصة, Specialty Coffee Egypt, مطبخ عجين مخمر, Sourdough Kitchen, إفطار فاخر, Premium Breakfast, كافيه هادئ, Quiet Cafe, واي فاي سريع, Fast WiFi Cafe, مقهى للعمل, Work Cafe El-Mahalla, قهوة اسبريسو, Espresso Bar, لاتيه ارت, Latte Art, فرابيه, Frappe, بوبا تي, Boba Tea, ميلك شيك, Milkshake, موخيتو, Mojito, كيك, Cakes, وافل, Waffles, بان كيك, Pancakes, كريب, Crepes, كروسان, Croissants, قهوة تركي, Turkish Coffee, قهوة فرنساوي, French Coffee, كابتشينو, Cappuccino, موكا, Mocha, ماتشا, Matcha, مشروبات ساخنة, Hot Drinks, مشروبات باردة, Cold Drinks, عصير طبيعي, Fresh Juice",
       },
       {
         property: "og:title",
-        content: "Griffin Coffee | Quiet Specialty Café in El-Mahalla El-Kubra",
+        content: "Griffin Coffee | أفضل مقهى سبيشاليتي في المحلة الكبرى",
       },
       {
         property: "og:description",
         content:
-          "Slow mornings, serious coffee and a sourdough kitchen in El-Mahalla El-Kubra. Explore the Griffin menu.",
+          "مقهى جريفين - قهوة سبيشاليتي فاخرة، مطبخ عجين مخمر، مكان هادئ للعمل والاسترخاء في المحلة الكبرى. Specialty coffee, sourdough meals & quiet workspace.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://griffin.coffee/" },
+      { property: "og:site_name", content: "Griffin Coffee" },
+      { property: "og:locale", content: "ar_EG" },
+      { property: "og:locale:alternate", content: "en_US" },
+      { property: "og:image", content: "https://griffin.coffee/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Griffin Coffee - Specialty Coffee House in El-Mahalla El-Kubra" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Griffin Coffee | Specialty Café El-Mahalla" },
+      { name: "twitter:description", content: "قهوة سبيشاليتي فاخرة ومطبخ عجين مخمر في المحلة الكبرى" },
+      { name: "twitter:image", content: "https://griffin.coffee/og-image.jpg" },
+      { name: "twitter:site", content: "@griffin_coffee_eg" },
+      { name: "twitter:creator", content: "@griffin_coffee_eg" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "googlebot", content: "index, follow" },
+      { name: "bingbot", content: "index, follow" },
+      { name: "author", content: "Griffin Coffee" },
+      { name: "language", content: "Arabic, English" },
+      { name: "geo.region", content: "EG-GH" },
+      { name: "geo.placename", content: "El-Mahalla El-Kubra" },
+      { name: "geo.position", content: "30.975424;31.169584" },
+      { name: "ICBM", content: "30.975424, 31.169584" },
+      { name: "theme-color", content: "#2a4a3d" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://griffin.coffee/" },
+      { rel: "alternate", hreflang: "ar", href: "https://griffin.coffee/" },
+      { rel: "alternate", hreflang: "en", href: "https://griffin.coffee/" },
+      { rel: "alternate", hreflang: "x-default", href: "https://griffin.coffee/" },
     ],
     scripts: [
       {
@@ -40,26 +75,129 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "CafeOrCoffeeShop",
-          name: "Griffin",
-          image: "https://griffin.coffee/og.jpg",
+          name: "Griffin Coffee",
+          alternateName: ["جريفين كافيه", "Griffin Café", "Griffin Coffee House"],
+          description: "Specialty coffee house in El-Mahalla El-Kubra offering premium espresso, sourdough meals, breakfast plates, and a quiet workspace with fast Wi-Fi.",
+          image: [
+            "https://griffin.coffee/og-image.jpg",
+            "https://griffin.coffee/hero.jpg"
+          ],
+          logo: "https://griffin.coffee/logo.png",
+          url: "https://griffin.coffee",
           telephone: "+20 40 2235800",
-          servesCuisine: ["Coffee", "Sourdough", "Breakfast"],
-          priceRange: "EGP",
+          email: "info@griffin.coffee",
+          servesCuisine: ["Coffee", "Specialty Coffee", "Sourdough", "Breakfast", "Desserts", "Beverages"],
+          priceRange: "EGP 50-200",
+          currenciesAccepted: "EGP",
+          paymentAccepted: "Cash, Credit Card, Debit Card",
+          acceptsReservations: "True",
           address: {
             "@type": "PostalAddress",
             streetAddress: "El-Bahr Street, in front of the National Bank of Egypt",
             addressLocality: "El-Mahalla El-Kubra",
+            addressRegion: "Gharbia Governorate",
             postalCode: "31951",
             addressCountry: "EG",
           },
-          geo: { "@type": "GeoCoordinates", latitude: 30.975424, longitude: 31.169584 },
-          openingHours: "Mo-Su 07:30-01:00",
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 30.975424,
+            longitude: 31.169584,
+          },
+          openingHoursSpecification: {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            opens: "07:30",
+            closes: "01:00"
+          },
+          menu: "https://griffin.coffee/menu",
           sameAs: [
             "https://instagram.com/griffin.coffee.eg",
             "https://facebook.com/griffin.coffee.eg",
           ],
+          amenityFeature: [
+            {
+              "@type": "LocationFeatureSpecification",
+              name: "Free WiFi",
+              value: true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              name: "Indoor Seating",
+              value: true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              name: "Quiet Environment",
+              value: true
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              name: "Work-Friendly",
+              value: true
+            }
+          ],
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "4.8",
+            reviewCount: "150",
+            bestRating: "5",
+            worstRating: "1"
+          },
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Restaurant",
+          "@id": "https://griffin.coffee/#restaurant",
+          name: "Griffin Coffee",
+          image: "https://griffin.coffee/og-image.jpg",
+          servesCuisine: ["Coffee", "Breakfast", "Brunch", "Desserts"],
+          telephone: "+20402235800",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "El-Bahr Street, in front of Banque Misr",
+            addressLocality: "El-Mahalla El-Kubra",
+            addressRegion: "Gharbia",
+            postalCode: "31951",
+            addressCountry: "EG"
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 30.975424,
+            longitude: 31.169584
+          },
+          openingHours: "Mo-Su 07:30-01:00",
+          priceRange: "$$",
+          hasMenu: "https://griffin.coffee/menu"
+        })
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "@id": "https://griffin.coffee/#localbusiness",
+          name: "Griffin Coffee",
+          description: "Best specialty coffee house in El-Mahalla El-Kubra",
+          url: "https://griffin.coffee",
+          telephone: "+20402235800",
+          areaServed: {
+            "@type": "City",
+            name: "El-Mahalla El-Kubra"
+          }
+        })
+      }
     ],
   }),
   component: Home,
@@ -69,9 +207,9 @@ function Home() {
   const [active, setActive] = useState<Dish | null>(null);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen w-full overflow-x-hidden bg-background">
       <Navbar />
-      <main>
+      <main className="w-full">
         <Hero />
         <DishesSection onSelect={setActive} />
         <AboutSection />
@@ -87,16 +225,21 @@ function Home() {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
+    <section 
+      className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden"
+      aria-label="Hero section"
+    >
       <img
         src={heroImage}
         alt="Warm interior of Griffin Coffee with a latte and sourdough on a marble table"
         width={1920}
         height={1280}
         className="absolute inset-0 size-full object-cover"
+        loading="eager"
+        fetchPriority="high"
       />
-      <div className="hero-veil absolute inset-0" />
-      <div className="relative z-10 mx-auto max-w-3xl px-6 pt-24 text-center">
+      <div className="hero-veil absolute inset-0" aria-hidden="true" />
+      <div className="relative z-10 mx-auto w-full max-w-3xl px-6 pt-24 text-center">
         <p className="rise-in text-[0.65rem] uppercase tracking-brand text-copper-soft sm:text-xs">
           El-Mahalla El-Kubra · Est. Coffee House
         </p>
@@ -113,10 +256,11 @@ function Hero() {
           <Link
             to="/menu"
             className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-copper px-9 py-4 text-xs uppercase tracking-[0.24em] text-copper transition-colors duration-500 hover:text-primary-foreground"
+            aria-label="Explore Griffin Coffee menu"
           >
             <span className="absolute inset-0 -translate-x-full bg-copper transition-transform duration-500 ease-out group-hover:translate-x-0" />
             <span className="relative">Explore Menu</span>
-            <span className="relative transition-transform duration-500 group-hover:translate-x-1">
+            <span className="relative transition-transform duration-500 group-hover:translate-x-1" aria-hidden="true">
               →
             </span>
           </Link>
@@ -130,8 +274,8 @@ function DishesSection({ onSelect }: { onSelect: (dish: Dish) => void }) {
   const loop = [...dishes, ...dishes];
 
   return (
-    <section id="dishes" className="bg-ivory py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-6 text-center">
+    <section id="dishes" className="w-full overflow-hidden bg-ivory py-20 sm:py-28">
+      <Reveal className="mx-auto max-w-7xl px-6 text-center">
         <p className="text-xs uppercase tracking-[0.28em] text-emerald-deep/70">
           Some types of dishes are
         </p>
@@ -139,10 +283,10 @@ function DishesSection({ onSelect }: { onSelect: (dish: Dish) => void }) {
           Sourdough Meals
         </h2>
         <div className="rule-copper mx-auto mt-6 w-40" />
-      </div>
+      </Reveal>
 
-      <div className="group relative mt-14 overflow-hidden">
-        <div className="marquee-track flex gap-6 px-6 group-hover:marquee-paused">
+      <div className="group relative mt-14 w-full overflow-hidden">
+        <div className="marquee-track flex gap-6 group-hover:marquee-paused">
           {loop.map((dish, i) => (
             <button
               key={`${dish.id}-${i}`}
@@ -150,14 +294,14 @@ function DishesSection({ onSelect }: { onSelect: (dish: Dish) => void }) {
               onClick={() => onSelect(dish)}
               className="w-[16rem] shrink-0 overflow-hidden rounded-sm border border-emerald-deep/20 bg-white text-left transition-all duration-500 hover:-translate-y-2 hover:border-copper hover:shadow-lux sm:w-[20rem]"
             >
-              <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-white">
+              <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={dish.image}
                   alt={dish.name}
                   width={1024}
                   height={768}
                   loading="lazy"
-                  className="size-full object-contain transition-transform duration-700 hover:scale-105"
+                  className="size-full object-cover transition-transform duration-700 hover:scale-105"
                 />
               </div>
               <div className="px-5 py-5">
@@ -211,9 +355,9 @@ function DishDialog({ dish, onClose }: { dish: Dish | null; onClose: () => void 
 
 function AboutSection() {
   return (
-    <section id="about" className="bg-background py-20 sm:py-28">
+    <section id="about" className="w-full overflow-hidden bg-background py-20 sm:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2">
-        <div>
+        <Reveal>
           <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
             About
           </p>
@@ -239,9 +383,11 @@ function AboutSection() {
               deadline and a slow Friday morning equally well.
             </p>
           </div>
-        </div>
+        </Reveal>
 
-        <OrbitGallery />
+        <Reveal delay={0.15}>
+          <OrbitGallery />
+        </Reveal>
       </div>
     </section>
   );
@@ -249,10 +395,9 @@ function AboutSection() {
 
 function OrbitGallery() {
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[22rem] overflow-hidden sm:max-w-[30rem]">
-      <div className="absolute inset-6 rounded-full border border-border sm:inset-10" />
-      <div className="orbit-ring absolute inset-6 sm:inset-10">
-
+    <div className="relative mx-auto aspect-square w-full max-w-[36rem] overflow-visible">
+      <div className="absolute inset-8 rounded-full border border-border sm:inset-10" />
+      <div className="orbit-ring absolute inset-8 sm:inset-10">
         {galleryImages.map((image, i) => {
           const angle = (360 / galleryImages.length) * i;
           return (
@@ -270,7 +415,7 @@ function OrbitGallery() {
                       width={1024}
                       height={1024}
                       loading="lazy"
-                      className="size-20 rounded-full border border-copper/50 object-cover shadow-lux sm:size-28"
+                      className="size-24 rounded-full border-2 border-copper/50 object-cover shadow-lux sm:size-28"
                     />
                   </div>
                 </div>
@@ -278,10 +423,9 @@ function OrbitGallery() {
             </div>
           );
         })}
-
       </div>
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <p className="font-display text-center text-2xl uppercase tracking-brand text-copper">
+        <p className="font-display text-center text-2xl uppercase tracking-brand text-copper sm:text-3xl">
           Griffin
         </p>
       </div>
@@ -291,32 +435,33 @@ function OrbitGallery() {
 
 function ReviewsSection() {
   return (
-    <section id="reviews" className="border-y border-border bg-secondary py-20 sm:py-28">
+    <section id="reviews" className="w-full overflow-hidden border-y border-border bg-secondary py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center">
+        <Reveal className="text-center">
           <h2 className="font-display text-4xl uppercase tracking-[0.14em] text-copper sm:text-5xl">
             Customer Reviews
           </h2>
           <div className="rule-copper mx-auto mt-6 w-40" />
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {reviews.map((review) => (
-            <figure
+          {reviews.map((review, i) => (
+            <Reveal
               key={review.name}
+              delay={i * 0.12}
               className="rounded-sm border border-border bg-background p-8 transition-transform duration-500 hover:-translate-y-1"
             >
               <Quote className="size-6 text-copper" />
               <blockquote className="mt-5 text-sm leading-relaxed text-muted-foreground">
                 “{review.quote}”
               </blockquote>
-              <figcaption className="mt-6">
+              <div className="mt-6">
                 <p className="font-display text-lg text-copper">{review.name}</p>
                 <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                   {review.role}
                 </p>
-              </figcaption>
-            </figure>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -326,14 +471,14 @@ function ReviewsSection() {
 
 function LocationsSection() {
   return (
-    <section id="locations" className="bg-background py-20 sm:py-28">
+    <section id="locations" className="w-full overflow-hidden bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center">
+        <Reveal className="text-center">
           <h2 className="font-display text-4xl uppercase tracking-[0.14em] text-copper sm:text-5xl">
             Our Locations
           </h2>
           <div className="rule-copper mx-auto mt-6 w-40" />
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-2">
           <div className="order-1 overflow-hidden rounded-sm border border-border lg:order-2">
@@ -413,7 +558,7 @@ function LocationsSection() {
 
 function CtaSection() {
   return (
-    <section id="visit" className="relative overflow-hidden bg-secondary py-24 text-center">
+    <section id="visit" className="relative w-full overflow-hidden bg-secondary py-24 text-center">
       <div className="mx-auto max-w-3xl px-6">
         <h2 className="font-display text-4xl leading-tight text-copper sm:text-6xl">
           Ready for the best cup of coffee?
