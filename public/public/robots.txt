@@ -1,0 +1,21 @@
+# Griffin Coffee - Robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.wrangler/
+
+# Sitemap location
+Sitemap: https://griffin.coffee/sitemap.xml
+
+# Crawl-delay for all bots
+Crawl-delay: 1
+
+# Special rules for common bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /

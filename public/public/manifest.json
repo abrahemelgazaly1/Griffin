@@ -1,0 +1,50 @@
+{
+  "name": "Griffin Coffee - Specialty Coffee House",
+  "short_name": "Griffin Coffee",
+  "description": "Premium specialty coffee house in El-Mahalla El-Kubra with sourdough kitchen and quiet workspace",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2a4a3d",
+  "theme_color": "#2a4a3d",
+  "orientation": "portrait-primary",
+  "lang": "ar-EG",
+  "dir": "rtl",
+  "categories": ["food", "lifestyle"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Menu",
+      "short_name": "Menu",
+      "description": "Browse our full menu",
+      "url": "/menu",
+      "icons": [{ "src": "/icon-menu.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
